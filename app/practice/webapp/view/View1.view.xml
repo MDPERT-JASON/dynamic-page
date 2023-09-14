@@ -1,0 +1,221 @@
+<!-- <mvc:View controllerName="practice.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content />
+    </Page>
+</mvc:View> -->
+<mvc:View
+    controllerName="practice.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:main="sap.ui.webc.main"
+>
+    <Page
+        showHeader="false"
+        enableScrolling="false"
+        class="sapUiContentPadding"
+    >
+        <content>
+            <table:Table
+                rows="{/CardData}"
+                selectionMode="MultiToggle"
+                visibleRowCount="7"
+                rowActionCount="1"
+                paste="onPaste"
+                ariaLabelledBy="title"
+            >
+                <table:extension>
+                    <OverflowToolbar
+                        style="Clear"
+                        width="auto"
+                        height="auto"
+                    >
+                        <VBox
+                            width="15%"
+                            height="auto"
+                        >
+                            <Label text="{i18n_ko>approveDate}" />
+                            <main:DateRangePicker
+                                id="DRP1"
+                                placeholder="Enter Date"
+                                change="handleChange"
+                                class="sapUiSmallMarginBottom"
+                            />
+                        </VBox>
+                        <VBox
+                            width="15%"
+                            height="auto"
+                        >
+                            <Label text="{i18n_ko>account}" />
+                            <Select
+							forceSelection="false"
+                                id="selectionField"
+                                items="{
+                                    path: 'account>/AccountMaster',
+                                    templateShareable: false
+                                  }"
+                                width="100%"
+                            >
+                                <core:Item
+                                    key="{account>accountID}"
+                                    text="{account>accountName}"
+                                />
+                            </Select>
+                        </VBox>
+                        <VBox width="15%">
+                            <Label text="적요" />
+                            <Input
+                                placeholder="{text}"
+                                width="100%"
+                            />
+                        </VBox>
+                        <VBox width="15%">
+                            <Label text="{i18n_ko>wfStatus}" />
+                            <Select
+                                id="selectionField2"
+                                items="{
+                                    path: '/Approve',
+                                    templateShareable: false
+                                  }"
+                                width="100%"
+                            >
+                                <core:Item
+                                    key="{wfStatus}"
+                                    text="{wfStatus}"
+                                />
+                            </Select>
+                        </VBox>
+                    </OverflowToolbar>
+                    <ToolbarSpacer />
+                </table:extension>
+                <table:rowActionTemplate>
+                    <table:RowAction>
+                        <table:RowActionItem
+                            type="Navigation"
+                            press=".onPressNav"
+                        />
+                    </table:RowAction>
+                </table:rowActionTemplate>
+                <table:columns>
+                    <table:Column width="11rem">
+                        <Label text="결제상태" />
+                        <table:template>
+                            <Text
+                                text="{text}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="전표번호" />
+                        <table:template>
+                            <Text
+                                text="{accountName}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="거래일자" />
+                        <table:template>
+                            <Text
+                                text="{
+									path: 'approveDate',
+									type: 'sap.ui.model.type.Date',
+									formatOptions: {
+										source: {pattern:'YYYYMMdd'},
+										pattern: 'YYYY-MM-dd'
+										}
+									}"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="계정" />
+                        <table:template>
+                            <ComboBox
+                                id="selectionField3"
+                                items="{
+                                    path: 'account>/AccountMaster',
+                                    templateShareable: false
+                                  }"
+                                width="100%"
+								selectedKey="{accountMaster_accountID}"
+                            >
+                                <core:Item
+                                    key="{account>accountID}"
+                                    text="{account>accountName}"
+                                />
+                            </ComboBox>
+
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="금액" />
+                        <table:template>
+                            <Text
+                                text="{approveTotal}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="사용처" />
+                        <table:template>
+                            <Text
+                                text="{venderName}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="업종" />
+                        <table:template>
+                            <Text
+                                text="{mmcCode}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="증빙유형" />
+						<table:template>
+                        <ComboBox id="myCombobox"
+                            items="{
+    				            path: 'wsfStatus>/code',
+								templateShareable: false
+            						}">
+                            <core:Item
+                                key="{wsfStatus>ID}"
+                                text="{wsfStatus>name}"
+                            />
+                        </ComboBox> 
+						</table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="적요" />
+                        <table:template>
+                            <Text
+                                text="{accountName}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="첨부" />
+                        <table:template>
+                            <Text
+                                text="{}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                </table:columns>
+            </table:Table>
+        </content>
+    </Page>
+</mvc:View>

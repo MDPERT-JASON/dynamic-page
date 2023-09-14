@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CarddataService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="CardData" EntityType="CarddataService.CardData">
+                    <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="abroadCurrency" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="approve" Target="Approve"/>
+                </EntitySet>
+                <EntitySet Name="Approve" EntityType="CarddataService.Approve">
+                    <NavigationPropertyBinding Path="carddata" Target="CardData"/>
+                </EntitySet>
+                <EntitySet Name="Currencies" EntityType="CarddataService.Currencies">
+                    <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
+                </EntitySet>
+                <EntitySet Name="Currencies_texts" EntityType="CarddataService.Currencies_texts"/>
+            </EntityContainer>
+            <EntityType Name="CardData">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="gubun" Type="Edm.String" MaxLength="10"/>
+                <Property Name="approveDate" Type="Edm.String" MaxLength="10"/>
+                <Property Name="approveTime" Type="Edm.String" MaxLength="8"/>
+                <Property Name="buyDate" Type="Edm.String" MaxLength="10"/>
+                <Property Name="changeDate" Type="Edm.String" MaxLength="10"/>
+                <Property Name="cardNum" Type="Edm.String" MaxLength="120"/>
+                <Property Name="approveNum" Type="Edm.String" MaxLength="10"/>
+                <Property Name="delDate" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="currency" Type="CarddataService.Currencies">
+                    <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="approveAmt" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="tax" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="serviceCharge" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="approveTotal" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="buyCollectionNum" Type="Edm.String" MaxLength="20"/>
+                <Property Name="installmentMonth" Type="Edm.String" MaxLength="2"/>
+                <Property Name="remainInstallmentMonth" Type="Edm.String" MaxLength="2"/>
+                <Property Name="venderNum" Type="Edm.String" MaxLength="20"/>
+                <Property Name="abroadUse" Type="Edm.String" MaxLength="2"/>
+                <NavigationProperty Name="abroadCurrency" Type="CarddataService.Currencies">
+                    <ReferentialConstraint Property="abroadCurrency_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="abroadCurrency_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="venderTaxNum" Type="Edm.String" MaxLength="20"/>
+                <Property Name="venderName" Type="Edm.String" MaxLength="200"/>
+                <Property Name="venderPerson" Type="Edm.String" MaxLength="20"/>
+                <Property Name="venderTel" Type="Edm.String" MaxLength="20"/>
+                <Property Name="venderAddress1" Type="Edm.String" MaxLength="50"/>
+                <Property Name="venderAddress2" Type="Edm.String" MaxLength="50"/>
+                <Property Name="venderCloseInfo" Type="Edm.String" MaxLength="10"/>
+                <Property Name="mmcCode" Type="Edm.String" MaxLength="8"/>
+                <Property Name="venderZipCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="mmcName" Type="Edm.String" MaxLength="50"/>
+                <Property Name="actualPlaceAmt" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="taxGubun" Type="Edm.String" MaxLength="2"/>
+                <Property Name="taxGubunName" Type="Edm.String" MaxLength="50"/>
+                <Property Name="updateDateTime" Type="Edm.DateTimeOffset"/>
+                <Property Name="accountMaster_accountID" Type="Edm.String" MaxLength="20"/>
+                <NavigationProperty Name="approve" Type="CarddataService.Approve" Partner="carddata">
+                    <ReferentialConstraint Property="approve_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="approve_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="Approve">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="wfDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="wfStatus" Type="Edm.String" MaxLength="2"/>
+                <Property Name="remark" Type="Edm.String" MaxLength="200"/>
+                <Property Name="acctNum" Type="Edm.String" MaxLength="20"/>
+                <Property Name="approveType" Type="Edm.String" MaxLength="20"/>
+                <NavigationProperty Name="carddata" Type="CarddataService.CardData" Partner="approve">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="approve_ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Currencies">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+                <Property Name="minorUnit" Type="Edm.Int16"/>
+                <NavigationProperty Name="texts" Type="Collection(CarddataService.Currencies_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="CarddataService.Currencies_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Currencies_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+            </EntityType>
+            <Annotations Target="CarddataService.CardData/currency">
+                <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+                    <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+                    </Annotations>
+                    <Annotations Target="CarddataService.CardData/currency_code">
+                        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+                            <Annotation Term="Common.ValueList">
+                                <Record Type="Common.ValueListType">
+                                    <PropertyValue Property="Label" String="{i18n>Currency}"/>
+                                        <PropertyValue Property="CollectionPath" String="Currencies"/>
+                                        <PropertyValue Property="Parameters">
+                                            <Collection>
+                                                <Record Type="Common.ValueListParameterInOut">
+                                                    <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                                </Record>
+                                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Annotation>
+                                <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+                                </Annotations>
+                                <Annotations Target="CarddataService.CardData/abroadCurrency">
+                                    <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+                                        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+                                        </Annotations>
+                                        <Annotations Target="CarddataService.CardData/abroadCurrency_code">
+                                            <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+                                                <Annotation Term="Common.ValueList">
+                                                    <Record Type="Common.ValueListType">
+                                                        <PropertyValue Property="Label" String="{i18n>Currency}"/>
+                                                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                                                            <PropertyValue Property="Parameters">
+                                                                <Collection>
+                                                                    <Record Type="Common.ValueListParameterInOut">
+                                                                        <PropertyValue Property="LocalDataProperty" PropertyPath="abroadCurrency_code"/>
+                                                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                                                    </Record>
+                                                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                                                    </Record>
+                                                                </Collection>
+                                                            </PropertyValue>
+                                                        </Record>
+                                                    </Annotation>
+                                                    <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="CarddataService.Currencies">
+                                                        <Annotation Term="UI.Identification">
+                                                            <Collection>
+                                                                <Record Type="UI.DataField">
+                                                                    <PropertyValue Property="Value" Path="name"/>
+                                                                </Record>
+                                                            </Collection>
+                                                        </Annotation>
+                                                    </Annotations>
+                                                    <Annotations Target="CarddataService.Currencies/name">
+                                                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                        </Annotations>
+                                                        <Annotations Target="CarddataService.Currencies/descr">
+                                                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="CarddataService.Currencies/code">
+                                                                <Annotation Term="Common.Text" Path="name"/>
+                                                                <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="CarddataService.Currencies/symbol">
+                                                                    <Annotation Term="Common.Label" String="{i18n>CurrencySymbol}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="CarddataService.Currencies/minorUnit">
+                                                                        <Annotation Term="Common.Label" String="{i18n>CurrencyMinorUnit}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="CarddataService.Currencies_texts/locale">
+                                                                            <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="CarddataService.Currencies_texts/name">
+                                                                                <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="CarddataService.Currencies_texts/descr">
+                                                                                    <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="CarddataService.Currencies_texts/code">
+                                                                                        <Annotation Term="Common.Text" Path="name"/>
+                                                                                        <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+                                                                                        </Annotations>
+                                                                                    </Schema>
+                                                                                </edmx:DataServices>
+                                                                            </edmx:Edmx>
