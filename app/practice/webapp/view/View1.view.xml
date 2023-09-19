@@ -34,6 +34,7 @@
                         width="auto"
                         height="auto"
                     >
+                     
                         <VBox
                             width="15%"
                             height="auto"
@@ -138,20 +139,19 @@
                         <Label text="계정" />
                         <table:template>
                             <ComboBox
-                                id="selectionField3"
+                                id="myAccountComboBox"
                                 items="{
                                     path: 'account>/AccountMaster',
                                     templateShareable: false
                                   }"
                                 width="100%"
-								selectedKey="{accountMaster_accountID}"
+                                selectedKey="{accountMaster_accountID}"
                             >
-                                <core:Item
+                                <core:Item 
                                     key="{account>accountID}"
                                     text="{account>accountName}"
                                 />
                             </ComboBox>
-
                         </table:template>
                     </table:Column>
                     <table:Column width="11rem">
@@ -183,18 +183,20 @@
                     </table:Column>
                     <table:Column width="11rem">
                         <Label text="증빙유형" />
-						<table:template>
-                        <ComboBox id="myCombobox"
-                            items="{
+                        <table:template>
+                            <ComboBox
+                                id="myCombobox"
+                                items="{
     				            path: 'wsfStatus>/code',
 								templateShareable: false
-            						}">
-                            <core:Item
-                                key="{wsfStatus>ID}"
-                                text="{wsfStatus>name}"
-                            />
-                        </ComboBox> 
-						</table:template>
+            						}"
+                            >
+                                <core:Item
+                                    key="{wsfStatus>ID}"
+                                    text="{wsfStatus>name}"
+                                />
+                            </ComboBox>
+                        </table:template>
                     </table:Column>
                     <table:Column width="11rem">
                         <Label text="적요" />

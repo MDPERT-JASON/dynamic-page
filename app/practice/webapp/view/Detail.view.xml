@@ -1,0 +1,490 @@
+<mvc:View
+    controllerName="practice.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:main="sap.ui.webc.main"
+    xmlns:uxap="sap.uxap"
+>
+    <!-- <f:DynamicPage id="dynamicPageId2">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Detail" />
+                </f:heading>
+                <f:content>
+                    <OverflowToolbar />
+                </f:content>
+                <f:navigationActions>
+                    <Button
+                        id="fullButton"
+                        icon="sap-icon://full-screen"
+                        press="onPressFull"
+                    />
+                    <Button
+                        id="exitFullButton"
+                        icon="sap-icon://exit-full-screen"
+                        press="onExitFull"
+                    />
+                    <Button
+                        icon="sap-icon://decline"
+                        press="onNavBack"
+                    />
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <table:Table
+                rows="{/CardData}"
+                selectionMode="MultiToggle"
+                visibleRowCount="7"
+                rowActionCount="1"
+                paste="onPaste"
+                ariaLabelledBy="title"
+            >
+                <table:extension>
+                    <OverflowToolbar
+                        width="auto"
+                        height="auto"
+                    >
+                                         <VBox
+                            width="20%"
+                            height="auto"
+                        >
+                            <Label text="{i18n_ko>approveDate}" />
+                            <Text text="{approveDate}" />
+                        </VBox>
+                        <VBox
+                            width="20%"
+                            height="auto"
+                        >
+                            <Label text="{i18n_ko>approveAmt}" />
+                            <Text text="{approveAmt}" />
+                        </VBox>
+                        <VBox
+                            width="20%"
+                            height="auto"
+                        >
+                            <Label text="{i18n_ko>mmcName}" />
+                            <Text text="{mmcName}" />
+                        </VBox>
+                        <VBox
+                            width="20%"
+                            height="auto"
+                        >
+                            <Label text="{i18n_ko>venderName}" />
+                            <Text text="{venderName}" />
+                        </VBox>
+                        </OverflowToolbar>
+                        <ToolbarSpacer ></ToolbarSpacer>
+                        <OverflowToolbar
+                        width="auto"
+                        height="auto" >
+                        <VBox
+                            width="20%"
+                            height="auto"
+                        >
+
+                            <Label text="{i18n_ko>costCenter}" />
+                            <Select>
+                                <core:Item />
+                            </Select>
+                        </VBox>
+                        <VBox>
+                                <Label text="계정" />
+                                    <ComboBox
+                                        id="myAccount"
+                                        items="{
+                                    path: 'account>/AccountMaster',
+                                    templateShareable: false
+                                  }"
+                                        width="100%"
+                                        selectedKey="{accountMaster_accountID}"
+                                    >
+                                        <core:Item
+                                            key="{account>accountID}"
+                                            text="{account>accountName}"
+                                        />
+                                    </ComboBox>
+                        </VBox>
+                        <VBox
+                            width="20%"
+                            height="auto"
+                        >
+                        <Label text="증빙유형" />
+                        <ComboBox id="myCombobox2"
+                            items="{
+    				            path: 'wsfStatus>/code',
+								templateShareable: false
+            						}">
+                            <core:Item
+                                key="{wsfStatus>ID}"
+                                text="{wsfStatus>name}"
+                            />
+                        </ComboBox> 
+                        </VBox>
+                
+                        <VBox width="20%">
+                            <Label text="{i18n_ko>wfStatus}" />
+                            <Select
+                                id="selectionField2"
+                                items="{
+                                    path: '/Approve',
+                                    templateShareable: false
+                                  }"
+                                width="100%"
+                            >
+                                <core:Item
+                                    key="{wfStatus}"
+                                    text="{wfStatus}"
+                                />
+                            </Select>
+                        </VBox>
+                        
+                    </OverflowToolbar>
+                    <ToolbarSpacer />
+                </table:extension>
+                <table:rowActionTemplate>
+                    <table:RowAction>
+                        <table:RowActionItem
+                            type="Navigation"
+                            press=".onPressNav"
+                        />
+                    </table:RowAction>
+                </table:rowActionTemplate>
+                <table:columns>
+                    <table:Column width="11rem">
+                        <Label text="중계정" />
+                        <table:template>
+                            <Text
+                                text="{text}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="총예산"/>
+                        <table:template>
+                            <Text
+                                text="{approveTotal}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="Rebase 예상" />
+                        <table:template>
+                            <Text
+                                text="{approveTotal}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="Invoke 설정(ERP)" />
+                        <table:template>
+                            <Text
+                                text="{approveAmt}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="parking 실적" />
+                        <table:template>
+                            <Text
+                                text="{approveAmt}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="11rem">
+                        <Label text="가용예상" />
+                        <table:template>
+                            <Text
+                                text="{approveAmt}"
+                                wrapping="false"
+                            />
+                        </table:template>
+                    </table:Column>
+                   
+                </table:columns>
+            </table:Table>
+ 
+           </f:content>
+
+    </f:DynamicPage> -->
+    <uxap:ObjectPageLayout
+        id="ObjectPageLayout"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false"
+        preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true"
+        isChildPage="true"
+        upperCaseAnchorBar="false"
+    >
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                <uxap:actions>
+                    <Button
+                        id="fullButton"
+                        icon="sap-icon://full-screen"
+                        press="onPressFull"
+                    />
+                    <Button
+                        id="exitFullButton"
+                        icon="sap-icon://exit-full-screen"
+                        press="onExitFull"
+                    />
+                    <Button
+                        icon="sap-icon://decline"
+                        press="onNavBack"
+                    />
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+        <uxap:headerContent>
+            <HBox>
+                <VBox
+                    width="20%"
+                    height="auto"
+                >
+                    <Label text="{i18n_ko>approveDate}" />
+                    <Text text="{Detail>/buyDate}" />
+                </VBox>
+                <VBox
+                    width="20%"
+                    height="auto"
+                >
+                    <Label text="{i18n_ko>approveAmt}" />
+                    <Text text="{Detail>/approveAmt}" />
+                </VBox>
+                <VBox
+                    width="20%"
+                    height="auto"
+                >
+                    <Label text="{i18n_ko>mmcName}" />
+                    <Text text="{Detail>/mmcName}" />
+                </VBox>
+                <VBox
+                    width="20%"
+                    height="auto"
+                >
+                    <Label text="{i18n_ko>venderName}" />
+                    <Text text="{Detail>/venderName}" />
+                </VBox>
+            </HBox>
+            <HBox>
+                <VBox
+                    width="20%"
+                    height="auto"
+                >
+                    <Label text="{i18n_ko>costCenter}" />
+                    <ComboBox>
+                        <core:Item />
+                    </ComboBox>
+                </VBox>
+                <VBox width="20%" height="auto">
+                    <Label text="계정" />
+                    <!-- <ComboBox
+                      id="myDetailAccountComboBox"
+                                items="{
+                                    path: 'account>/AccountMaster',
+                                    templateShareable: false
+                                  }"
+                        width="100%"
+                        selectedKey="{Detail>/accountID}"
+                    >
+                        <core:Item
+                            key="{account>accountID}"
+                            text="{account>/accountName}"
+                        />
+                    </ComboBox> -->
+                       <ComboBox
+                                forceSelection="true"
+                                id="myAccountComboBox"
+                                items="{
+                                    path: 'account>/AccountMaster',
+                                    templateShareable: false
+                                  }"
+                                width="100%"
+                          
+                        selectedKey="{Detail>/accountID}"
+
+                            >
+                                <core:Item 
+                                    key="{account>accountID}"
+                                    text="{account>accountName}"
+                                />
+                            </ComboBox>
+                </VBox>
+                <VBox
+                    width="20%"
+                    height="auto"
+                >
+                    <Label text="증빙유형" />
+                    <ComboBox
+                        id="myCombobox2"
+                        items="{
+    				            path: 'wsfStatus>/code',
+								templateShareable: false
+            						}"
+                    >
+                        <core:Item
+                            key="{wsfStatus>ID}"
+                            text="{wsfStatus>name}"
+                        />
+                    </ComboBox>
+                </VBox>
+
+                <VBox width="20%">
+                    <Label text="{i18n_ko>wfStatus}" />
+                    <Select
+                        id="selectionField2"
+                        items="{
+                                    path: '/Approve',
+                                    templateShareable: false
+                                  }"
+                        width="100%"
+                    >
+                        <core:Item
+                            key="{wfStatus}"
+                            text="{wfStatus}"
+                        />
+                    </Select>
+                </VBox>
+            </HBox>
+        </uxap:headerContent>
+        <uxap:sections>
+            <uxap:ObjectPageSection title="Detail">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <form:SimpleForm
+                                maxContainerCols="2"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                                labelSpanL="12"
+                                labelSpanM="12"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                columnsL="1"
+                                columnsM="1"
+                            >
+                                <form:content>
+                                    <table:Table
+                                        rows="{/Approve}"
+                                        selectionMode="MultiToggle"
+                                        visibleRowCount="1"
+                                        rowActionCount="1"
+                                        paste="onPaste"
+                                        ariaLabelledBy="title"
+                                    >
+                                        <!-- <table:extension>
+                                            <OverflowToolbar
+                                                width="auto"
+                                                height="auto"
+                                            >
+
+                                            </OverflowToolbar>
+                                            <ToolbarSpacer />
+                                            <OverflowToolbar
+                                                width="auto"
+                                                height="auto"
+                                            >
+                                            
+                                               
+                                            </OverflowToolbar>
+                                            <ToolbarSpacer />
+                                        </table:extension> -->
+                                        <table:rowActionTemplate>
+                                            <table:RowAction>
+                                                <table:RowActionItem
+                                                    type="Navigation"
+                                                    press=".onPressNav"
+                                                />
+                                            </table:RowAction>
+                                        </table:rowActionTemplate>
+                                        <table:columns>
+                                            <table:Column width="11rem">
+                                                <Label text="중계정" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{text}"
+                                                        wrapping="false"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="11rem">
+                                                <Label text="총예산" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{approveTotal}"
+                                                        wrapping="false"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="11rem">
+                                                <Label text="Rebase 예상" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{approveTotal}"
+                                                        wrapping="false"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="11rem">
+                                                <Label
+                                                    text="Invoke 설정(ERP)"
+                                                />
+                                                <table:template>
+                                                    <Text
+                                                        text="{approveAmt}"
+                                                        wrapping="false"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="11rem">
+                                                <Label text="parking 실적" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{approveAmt}"
+                                                        wrapping="false"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                            <table:Column width="11rem">
+                                                <Label text="가용예상" />
+                                                <table:template>
+                                                    <Text
+                                                        text="{approveAmt}"
+                                                        wrapping="false"
+                                                    />
+                                                </table:template>
+                                            </table:Column>
+                                        </table:columns>
+                                    </table:Table>
+                                </form:content>
+                            </form:SimpleForm>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection title="Detail 2">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <VBox id="contentVBox" />
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+    </uxap:ObjectPageLayout>
+</mvc:View>

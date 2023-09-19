@@ -34,7 +34,6 @@
           "odataVersion": "2.0"
         }
       }
-
     }
   },
   "sap.ui": {
@@ -62,7 +61,13 @@
         "sap.ui.core": {},
         "sap.ui.unified": {},
         "sap.ui.table": {},
-        "sap.ui.webc.main": {}
+        "sap.ui.webc.main": {},
+        "sap.f":{},
+        "sap.suite.ui.generic.template":{},
+        "sap.ui.generic.app":{},
+        "sap.ui.comp":{},
+        "sap.ushell":{},
+        "sap.uxap":{}
       }
     },
     "contentDensities": {
@@ -82,7 +87,6 @@
           "bundleName": "practice.i18n.i18n_ko"
         }
       },
-
       "": {
         "dataSource": "mainService",
         "preload": true,
@@ -102,8 +106,11 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
+      },
+      "Detail": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {"defaultBindingMode": "TwoWay"}
       }
-
     },
     "resources": {
       "css": [
@@ -118,8 +125,8 @@
         "viewType": "XML",
         "async": true,
         "viewPath": "practice.view",
-        "controlAggregation": "pages",
-        "controlId": "app",
+        "controlAggregation": "beginColumnPages",
+        "controlId": "layout",
         "clearControlAggregation": false
       },
       "routes": [
@@ -128,6 +135,14 @@
           "pattern": ":?query:",
           "target": [
             "TargetView1"
+          ]
+        },
+        {
+          "name": "Detail",
+          "pattern": "Detail/{layout}/{objectId}/{objectId2}:?query",
+          "target": [
+            "TargetView1",
+            "Detail"
           ]
         }
       ],
@@ -138,6 +153,11 @@
           "clearControlAggregation": false,
           "viewId": "View1",
           "viewName": "View1"
+        },
+        "Detail": {
+          "viewId": "Detail",
+          "viewName": "Detail",
+          "controlAggregation": "midColumnPages"
         }
       }
     },
@@ -155,7 +175,9 @@
           "View1.controller.js",
           "App.view.xml",
           "App.controller.js",
-          "manifest.json"
+          "Detail.view.xml",
+          "Detail.controller.js",
+         "manifest.json"
         ]
       }
     }
