@@ -94,7 +94,8 @@
           "synchronizationMode": "None",
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": true
+          "earlyRequests": true,
+          "defaultBindingMode": "TwoWay"
         }
       },
       "account": {
@@ -140,6 +141,14 @@
         {
           "name": "Detail",
           "pattern": "Detail/{layout}/{objectId}/{objectId2}:?query",
+          "target": [
+            "TargetView1",
+            "Detail"
+          ]
+        },
+        {
+          "name": "EmptyDetail",
+          "pattern": "Detail/{layout}:?query",
           "target": [
             "TargetView1",
             "Detail"

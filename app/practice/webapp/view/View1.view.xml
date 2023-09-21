@@ -146,6 +146,7 @@
                                   }"
                                 width="100%"
                                 selectedKey="{accountMaster_accountID}"
+                                 selectionChange="onClickForm"
                             >
                                 <core:Item 
                                     key="{account>accountID}"
@@ -157,10 +158,11 @@
                     <table:Column width="11rem">
                         <Label text="금액" />
                         <table:template>
-                            <Text
+                            <!-- <Text
                                 text="{approveTotal}"
                                 wrapping="false"
-                            />
+                            /> -->
+                            <Input value="{approveTotal}"/>
                         </table:template>
                     </table:Column>
                     <table:Column width="11rem">
@@ -210,10 +212,6 @@
                     <table:Column width="11rem">
                         <Label text="첨부" />
                         <table:template>
-                            <Text
-                                text="{}"
-                                wrapping="false"
-                            />
                         </table:template>
                     </table:Column>
                 </table:columns>

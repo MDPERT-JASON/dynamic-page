@@ -316,6 +316,7 @@
                                 width="100%"
                           
                         selectedKey="{Detail>/accountID}"
+                        selectionChange="onClickForm"
 
                             >
                                 <core:Item 
@@ -362,7 +363,7 @@
             </HBox>
         </uxap:headerContent>
         <uxap:sections>
-            <uxap:ObjectPageSection title="Detail">
+            <uxap:ObjectPageSection title="Card Data - Account Master">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <uxap:blocks>
@@ -476,7 +477,9 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection title="Detail 2">
+
+
+            <uxap:ObjectPageSection title="Card Data - Account Spec">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <uxap:blocks>

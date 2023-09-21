@@ -107,6 +107,7 @@ sap.ui.define([
       onPressNav: function (oEvent) {
         const oComponent = this.getOwnerComponent();
         let oModel = oComponent.getModel();
+        let oView=this.getView();
         // let oDetailViewModel = new JSONModel();
         // this.getOwnerComponent().setModel(oDetailViewModel, "Detail");
 
@@ -115,12 +116,18 @@ sap.ui.define([
         let oApproveAmt = oModel.getProperty(sPath).approveAmt;
         let oMmcName = oModel.getProperty(sPath).mmcName;
         let oVenderName = oModel.getProperty(sPath).venderName;
+        let oAccountID=oModel.getProperty(sPath).accountMaster_accountID;
+
+        if(!oAccountID || oAccountID === '')
+          oAccountID=oView.byId("myAccountComboBox").getSelectedItem().getKey();
+        
         // let oSelectedKey = this.getView().byId("myAccountComboBoxItem").getSelectedKey();
         let sAccountPath =
           oComponent.getModel("account").createKey("/AccountMaster", {
-            "accountID":  oModel.getProperty(sPath).accountMaster_accountID});
-        let oAccount=oComponent.getModel("account").getProperty(sAccountPath);
-
+            "accountID": oAccountID
+          });
+          
+        let oAccount = oComponent.getModel("account").getProperty(sAccountPath);
 
         let oDetailModel = oComponent.getModel("Detail");
         oDetailModel.setProperty("/buyDate", oBuyDate);
@@ -131,13 +138,20 @@ sap.ui.define([
         oDetailModel.setProperty("/accountName", oAccount.accountName);
         let sId = oModel.getProperty(sPath).ID;
         let sId2 = oModel.getProperty(sPath).accountMaster_accountID;
+        let oRouter = this.getOwnerComponent().getRouter();
+        let sLayout = "Detail";
+        let oArgsNaved = {
+          layout: 'TwoColumnsMidExpanded'
+        };
         // oModel.setProperty("/sPath", sPath);
         // let accountMaster = oModel.getProperty(sPath).mas 
-        this.getOwnerComponent().getRouter().navTo("Detail", {
-          layout: 'TwoColumnsMidExpanded',
-          objectId: sId,
-          objectId2: sId2
-        });
+        if (sId && sId) {
+          oArgsNaved["objectId"] = sId;
+          oArgsNaved["objectId2"] = sId2;
+        }
+        else
+          sLayout = "EmptyDetail"
+        oRouter.navTo(sLayout, oArgsNaved);
       }
     });
   })
